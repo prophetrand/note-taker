@@ -36,9 +36,9 @@ app.post("/api/notes", function(req, res) {
 
 app.delete("/api/notes/:id", function(req, res) {
     var deleteId = req.params.id;
-    for (element of db){
-        if (element.id === parseInt(deleteId)) {
-            db.splice(element, 1);
+    for (note of db){
+        if (note.id === parseInt(deleteId)) {
+            db.splice(note, 1);
         }
     }
     res.send("note deleted");
