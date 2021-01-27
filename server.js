@@ -36,12 +36,14 @@ app.post("/api/notes", function(req, res) {
 
 app.delete("/api/notes/:id", function(req, res) {
     var deleteId = req.params.id;
+    var temp = [];
+    console.log(db.length);
     for (var i = 0; i < db.length; i++) {
-        if (db[i].id === deleteId) {
-            db.splice(i, 1);
-            console.log("I spliced it!");
+        if (db[i].id !== deleteId) {
+            temp.push(db[i])
         }
     }
+    db = temp;
     console.log(db);
     res.send(db);
 });
