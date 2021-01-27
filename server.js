@@ -1,4 +1,5 @@
 var express = require("express");
+var fs = require("fs");
 var path = require("path");
 var db = require("./db/db.json");
 var app = express();
@@ -23,7 +24,27 @@ app.get("/", function(req, res) {
 
 app.get("/api/notes", function(req, res) {
     res.json(db);
-})
+});
+
+app.post("/api/notes", function(req, res) {
+    var newNote = req.body;
+    newNote.id = Math.ceil(Math.random() * 10000);
+    db.push(newNote);
+    console.log(newNote);
+    res.json(newNote);
+});
+
+app.delete("/api/notes/:id", function(req, res) {
+    var deleteId = req.params.id;
+    for (var i = 0; i < db.length; i++) {
+        if (db[i].id === deleteId) {
+            db.splice(i, 1);
+            console.log("I spliced it!");
+        }
+    }
+    console.log(db);
+    res.send(db);
+});
 
 // Start the server
 app.listen(PORT, function() {
