@@ -30,22 +30,28 @@ app.post("/api/notes", function(req, res) {
     var newNote = req.body;
     newNote.id = Math.ceil(Math.random() * 10000);
     db.push(newNote);
-    console.log(newNote);
     res.json(newNote);
 });
 
 app.delete("/api/notes/:id", function(req, res) {
     var deleteId = req.params.id;
-    var temp = [];
-    console.log(db.length);
-    for (var i = 0; i < db.length; i++) {
-        if (db[i].id !== deleteId) {
-            temp.push(db[i])
+    // console.log(deleteId);
+    // var temp = [];
+    for (element of db){
+        if (element.id === parseInt(deleteId)) {
+            console.log("Yes! Finally a hit! Also: " + element.title);
         }
     }
-    db = temp;
-    console.log(db);
-    res.send(db);
+
+    for (var i = 0; i < db.length; i++) {
+        if (db[i].id === deleteId) {
+            console.log(i + "is what I've always wanted");
+            // db.splice(i, 1);
+        }
+    }
+    // db = temp;
+    // console.log(db);
+    res.send("note deleted");
 });
 
 // Start the server
